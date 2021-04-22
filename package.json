@@ -1,0 +1,14 @@
+{
+	"private": true,
+	"name": "neurage",
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"client": "yarn workspace @neurage/client dev",
+		"start": "concurrently --kill-others-on-fail \"yarn client\""
+	},
+	"dependencies": {
+		"concurrently": "^6.0.2"
+	}
+}
