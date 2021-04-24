@@ -1,4 +1,3 @@
-from fastapi import Depends, FastAPI, HTTPException, status
-
 def get_age(input):
+	age = input
 	return age

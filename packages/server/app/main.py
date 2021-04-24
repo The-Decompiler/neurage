@@ -1,23 +1,17 @@
+import sys
+sys.path.append(".")
+
 from fastapi import FastAPI
-from datetime import datetime
-from typing import Optional
-from typing import List
-from fastapi import Depends, FastAPI, HTTPException, status
-from fastapi import FastAPI,Request
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
-import sentry_sdk
 from app.utils import get_age
 from fastapi.middleware.cors import CORSMiddleware
-from app.utils.user_validation import UserValidator
-import sys
-sys.path.append('.')
 
 class PredictAge(BaseModel):
 	idk_some_input: str
 
 
 app = FastAPI()
-
 
 app.add_middleware(
 	CORSMiddleware,
@@ -32,11 +26,10 @@ async def root():
 	return "Hello World"
 
 @app.post("/predict_age")
-async def predict_age(input: PredictAge,request:Request):
+async def predict_age(input: PredictAge, request: Request):
 	try:
-		get_age(input)
+		print(request)
+		age = get_age(input)
+		return age
 	except Exception as e:
-		pass
-
-
-
+		return e
