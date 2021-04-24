@@ -14,29 +14,30 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.utils.user_validation import UserValidator
 
 class PredictAge(BaseModel):
-    idk_some_input: str
+	idk_some_input: str
 
 
 app = FastAPI()
 
 
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+	CORSMiddleware,
+	allow_origins=["*"],
+	allow_credentials=True,
+	allow_methods=["*"],
+	allow_headers=["*"],
 )
 
 @app.post("/")
 async def root():
-    return "Hello World"
+	return "Hello World"
 
 @app.post("/predict_age")
 async def predict_age(input: PredictAge,request:Request):
-    try:
-        get_age(input)
-    except Exception as e:
+	try:
+		get_age(input)
+	except Exception as e:
+		pass
 
 
 
