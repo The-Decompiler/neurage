@@ -1,5 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import styled from "styled-components";
+
+const AppWrapper = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #333333ff;
+	color: white;
+`;
 
 export const App = () => {
 	return (
@@ -9,7 +20,9 @@ export const App = () => {
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		<AppWrapper>
+			<App />
+		</AppWrapper>
 	</React.StrictMode>,
 	document.getElementById("root")
 );
