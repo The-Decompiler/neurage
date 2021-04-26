@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+
+import { Camera } from "components/Camera";
 
 const AppWrapper = styled.div`
 	position: absolute;
@@ -13,8 +15,12 @@ const AppWrapper = styled.div`
 `;
 
 export const App = () => {
+	const [payload, setPayload] = useState<number[]>([]);
+
 	return (
-		<div></div>
+		<>
+			<Camera setPayload={setPayload} />
+		</>
 	)
 }
 
