@@ -15,13 +15,44 @@ enum CameraState {
 	On = "ON"
 }
 
+export const Button = styled.div<{ camera: CameraState, clicking: boolean }>`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #ED8A34;
+	width: 12rem;
+	height 3rem;
+	font-family: sans-serif;
+	position: absolute;
+	left: 50%;
+	bottom: ${props => (props.camera == CameraState.On) ? "30%" : "50%"};
+	transform: translateX(-50%) translateY(-50%);
+	border-radius: 3rem;
+	user-select: none;
+	z-index: 50;
+
+	&:hover {
+		background-color: ${props => props.clicking ? "#F9DE6D" : "#F0BD42"};
+	}
+`;
+
 export const VideoCamera = styled.video<{ camera: CameraState }>`
+	position: absolute;
+	left: 50%;
+	bottom: 25%;
+	transform: translateX(-50%) translateY(-50%);
+	border: 1px solid #7C7E7E;
 	display: ${props => (props.camera == CameraState.On) ? "initial" : "none"};
 `;
 
 export const CaptureCanvas = styled.canvas<{ camera: CameraState, tookPicture: boolean }>`
+	position: relative;
+	left: 50%;
+	top: 42%;
+	transform: translateX(-50%) translateY(-50%);
 	display: ${props => (props.camera == CameraState.Off && props.tookPicture) ? "initial" : "none"};
-`
+	z-index: 10;
+`;
 
 export const Camera = (props: Props) => {
 	const [clicking, setClicking] = useState(false);
