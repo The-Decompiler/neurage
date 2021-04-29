@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { flattenImage } from "../utils";
 
+const VIDEO_SIZE = 300;
+
 type Props = {
 	setPayload: React.Dispatch<React.SetStateAction<number[]>>,
 }
@@ -30,7 +32,7 @@ export const Camera = (props: Props) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	const getWebcam = async () =>
-		navigator.mediaDevices.getUserMedia({ video: { width: 48, height: 48 }})
+		navigator.mediaDevices.getUserMedia({ video: { width: VIDEO_SIZE, height: VIDEO_SIZE }})
 			.then(stream => {
 				if (videoRef.current) {
 					videoRef.current.srcObject = stream;
@@ -68,7 +70,7 @@ export const Camera = (props: Props) => {
 				// Draw image to canvas
 				context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 				// Get flattened image array
-				let flatArray = flattenImage(context.getImageData(0, 0, canvas.width, canvas.height).data);
+				let flatArray = flattenImage(context.getImageData(0, 0, 48, 48).data);
 				setTookPicture(true);
 				closeWebcam();
 				props.setPayload(flatArray);
@@ -89,7 +91,7 @@ export const Camera = (props: Props) => {
 				</Button>
 			}
 			<CaptureCanvas
-				width="48" height="48"
+				width={VIDEO_SIZE} height={VIDEO_SIZE}
 				camera={camera} tookPicture
 				ref={canvasRef}
 			/>
