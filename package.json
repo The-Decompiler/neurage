@@ -6,7 +6,8 @@
 	],
 	"scripts": {
 		"client": "yarn workspace @neurage/client dev",
-		"start": "concurrently --kill-others-on-fail \"yarn client\""
+		"server": "python3 packages/server/app/main.py"
+		"start": "concurrently --kill-others-on-fail \"yarn client\" \"yarn server\""
 	},
 	"dependencies": {
 		"concurrently": "^6.0.2"
