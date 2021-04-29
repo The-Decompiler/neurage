@@ -22,6 +22,7 @@ export const CaptureCanvas = styled.canvas<{ camera: CameraState, tookPicture: b
 `
 
 export const Camera = (props: Props) => {
+	const [clicking, setClicking] = useState(false);
 	const [camera, setCamera] = useState<CameraState>(CameraState.Off);
 	const [tookPicture, setTookPicture] = useState(false);
 
@@ -38,6 +39,11 @@ export const Camera = (props: Props) => {
 				} else return false;
 			}).catch(() => false);
 
+	const clickAnimation = () => {
+		setClicking(true);
+		setTimeout(() => setClicking(false), 100);
+	}
+
 	const closeWebcam = async () =>
 		navigator.mediaDevices.getUserMedia({ video: true })
 			.then(stream => {
@@ -45,10 +51,16 @@ export const Camera = (props: Props) => {
 				setCamera(CameraState.Off);
 			});
 
-	const handleUseCamera = async () => getWebcam()
+	const openWebcam = async() => getWebcam()
 			.then(hasCamera => setCamera(hasCamera ? CameraState.On : CameraState.None));
 
+	const handleUseCamera = () => {
+		clickAnimation();
+		openWebcam();
+	}
+
 	const handleTakePicture = () => {
+		clickAnimation();
 		let canvas = canvasRef.current;
 		if (canvas) {
 			let context = canvas.getContext("2d");
@@ -67,14 +79,30 @@ export const Camera = (props: Props) => {
 	return (
 		<>
 			{ (camera == CameraState.None) && <div>No camera available</div> }
-			{ (camera == CameraState.Off && !tookPicture) && <button onClick={handleUseCamera}>Use Camera</button> }
+			{ (camera == CameraState.Off && !tookPicture) &&
+				<Button
+					onClick={handleUseCamera}
+					camera={camera}
+					clicking={clicking}
+				>
+					Use Camera
+				</Button>
+			}
 			<CaptureCanvas
 				width="48" height="48"
 				camera={camera} tookPicture
 				ref={canvasRef}
 			/>
 			<VideoCamera camera={camera} ref={videoRef} />
-			{ (camera == CameraState.On) && <button onClick={handleTakePicture}>Take Picture</button> }
+			{ (camera == CameraState.On) &&
+				<Button
+					onClick={handleTakePicture}
+					camera={camera}
+					clicking={clicking}
+				>
+					Take Picture
+				</Button>
+			}
 		</>
 	)
 }
