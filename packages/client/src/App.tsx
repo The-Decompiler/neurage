@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Header } from "components/Header";
 import { Camera } from "components/Camera";
+import { AgeComponent } from "components/AgeComponent";
 import { Footer } from "components/Footer";
 
 const predictAgeEndpoint = "predict_age";
