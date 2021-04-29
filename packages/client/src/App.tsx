@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
+import { Header } from "components/Header";
 import { Camera } from "components/Camera";
+import { AgeComponent } from "components/AgeComponent";
+import { Footer } from "components/Footer";
 
 const predictAgeEndpoint = "predict_age";
 
@@ -28,14 +31,19 @@ export const App = () => {
 				"body": JSON.stringify(payload)
 			}).then(response => response.json())
 				.then(data => setAge(data.age))
-				.catch(err => console.error(err));
+				.catch(err => {
+					console.error(err);
+					setAge(0);
+				});
 		}
 	}, [payload]);
 
 	return (
 		<>
+			<Header />
 			<Camera setPayload={setPayload} />
-			{ age && <div>You are {age} years old</div>}
+			{ (age > 0) && <AgeComponent age={age} /> }
+			<Footer />
 		</>
 	)
 }
