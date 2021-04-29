@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 
+import { Header } from "components/Header";
 import { Camera } from "components/Camera";
+import { Footer } from "components/Footer";
 
 const predictAgeEndpoint = "predict_age";
 
@@ -34,8 +36,10 @@ export const App = () => {
 
 	return (
 		<>
+			<Header />
 			<Camera setPayload={setPayload} />
 			{ age && <div>You are {age} years old</div>}
+			<Footer />
 		</>
 	)
 }
