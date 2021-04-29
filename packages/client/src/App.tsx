@@ -31,7 +31,10 @@ export const App = () => {
 				"body": JSON.stringify(payload)
 			}).then(response => response.json())
 				.then(data => setAge(data.age))
-				.catch(err => console.error(err));
+				.catch(err => {
+					console.error(err);
+					setAge(0);
+				});
 		}
 	}, [payload]);
 
@@ -39,7 +42,7 @@ export const App = () => {
 		<>
 			<Header />
 			<Camera setPayload={setPayload} />
-			{ age && <div>You are {age} years old</div>}
+			{ (age > 0) && <AgeComponent age={age} /> }
 			<Footer />
 		</>
 	)
