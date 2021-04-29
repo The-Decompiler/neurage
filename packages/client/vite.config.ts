@@ -6,6 +6,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"components": "./components/",
+			"static": "../static/",
 		},
 	},
 });
