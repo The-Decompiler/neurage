@@ -6,7 +6,8 @@
 	],
 	"scripts": {
 		"client": "yarn workspace @neurage/client dev",
-		"start": "concurrently --kill-others-on-fail \"yarn client\""
+		"server": "cd packages/server && uvicorn app.__init__:app --host 0.0.0.0 --port 5000",
+		"start": "concurrently --kill-others-on-fail \"yarn client\" \"yarn server\""
 	},
 	"dependencies": {
 		"concurrently": "^6.0.2"
