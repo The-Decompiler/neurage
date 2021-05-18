@@ -28,7 +28,7 @@ export const App = () => {
 			fetch(import.meta.env.VITE_BACKEND_URL + predictAgeEndpoint, {
 				"method": "POST",
 				"headers": { "Content-Type": "application/json" },
-				"body": JSON.stringify(payload)
+				"body": JSON.stringify({ "image_list": payload })
 			}).then(response => response.json())
 				.then(data => setAge(data.age))
 				.catch(err => {
