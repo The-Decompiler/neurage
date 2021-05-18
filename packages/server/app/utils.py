@@ -1,4 +1,4 @@
-import model
+import app.model as model
 import numpy as np
 import ast
 

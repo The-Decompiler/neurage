@@ -1,14 +1,14 @@
 import sys
 sys.path.append(".")
 
+from typing import List
 from fastapi import FastAPI
-from fastapi import FastAPI, Request
 from pydantic import BaseModel
-from app.utils import get_age
 from fastapi.middleware.cors import CORSMiddleware
+from app.utils import get_age
 
 class PredictAge(BaseModel):
-	image_list: str
+	image_list: List[int]
 
 
 app = FastAPI()
@@ -22,9 +22,9 @@ app.add_middleware(
 )
 
 @app.post("/predict_age")
-async def predict_age(input: PredictAge, _):
+async def predict_age(input: PredictAge):
 	try:
 		age = get_age(input)
-		return age
-	except Exception as e:
-		return e
+		return {"age": age}
+	except:
+		return {"age": -1}
