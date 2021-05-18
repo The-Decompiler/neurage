@@ -27,8 +27,8 @@ export const AgeComponent = (props: Props) => {
 			<AgeContainer>
 				{
 					(props.age > 0)
-					? "You are {props.age} years old"
-					: "Error guessing your age"
+					? "You are " + props.age + " years old"
+					: "Error connecting to the server"
 				}
 			</AgeContainer>
 		</>
