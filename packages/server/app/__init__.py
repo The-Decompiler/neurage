@@ -33,7 +33,7 @@ app.add_middleware(
 @app.post("/predict_age")
 async def predict_age(input: PredictAge):
 	try:
-		age = get_age(input)
+		age = get_age(input, model)
 		return {"age": age}
 	except:
 		return {"age": -1}
