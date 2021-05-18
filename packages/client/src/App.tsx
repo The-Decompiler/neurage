@@ -33,7 +33,7 @@ export const App = () => {
 				.then(data => setAge(data.age))
 				.catch(err => {
 					console.error(err);
-					setAge(0);
+					setAge(-1);
 				});
 		}
 	}, [payload]);
@@ -42,7 +42,7 @@ export const App = () => {
 		<>
 			<Header />
 			<Camera setPayload={setPayload} />
-			{ (age > 0) && <AgeComponent age={age} /> }
+			{ (age != 0) && <AgeComponent age={age} /> }
 			<Footer />
 		</>
 	)

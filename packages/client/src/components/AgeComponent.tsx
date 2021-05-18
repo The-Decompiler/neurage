@@ -25,7 +25,11 @@ export const AgeComponent = (props: Props) => {
 	return (
 		<>
 			<AgeContainer>
-				You are {props.age} years old
+				{
+					(props.age > 0)
+					? "You are {props.age} years old"
+					: "Error guessing your age"
+				}
 			</AgeContainer>
 		</>
 	)
