@@ -28,12 +28,12 @@ export const App = () => {
 			fetch(import.meta.env.VITE_BACKEND_URL + predictAgeEndpoint, {
 				"method": "POST",
 				"headers": { "Content-Type": "application/json" },
-				"body": JSON.stringify(payload)
+				"body": JSON.stringify({ "image_list": payload })
 			}).then(response => response.json())
 				.then(data => setAge(data.age))
 				.catch(err => {
 					console.error(err);
-					setAge(0);
+					setAge(-1);
 				});
 		}
 	}, [payload]);
@@ -42,7 +42,7 @@ export const App = () => {
 		<>
 			<Header />
 			<Camera setPayload={setPayload} />
-			{ (age > 0) && <AgeComponent age={age} /> }
+			{ (age != 0) && <AgeComponent age={age} /> }
 			<Footer />
 		</>
 	)

@@ -5,8 +5,8 @@ import tensorflow.keras.layers as L
 # import plotly.express as px
 from sklearn.model_selection import train_test_split
 
-def cnn_model(image):
-	data = pd.read_csv("age_gender.csv")
+def preprocess_data(filename):
+	data = pd.read_csv(filename)
 	# Convert pixels into numpy array
 	data["pixels"] = data["pixels"].apply(lambda x: np.array(x.split(), dtype="float32"))
 	# data.head()
@@ -17,6 +17,9 @@ def cnn_model(image):
 	# Convert pixels from 1D to 3D
 	X = X.reshape(X.shape[0], 48, 48, 1)
 	y = data["age"]
+	return X, y
+
+def train_model(X, y):
 	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.22, random_state=37)
 
 	model = tf.keras.Sequential([
@@ -34,7 +37,7 @@ def cnn_model(image):
 			L.Dense(1, activation="relu")
 	])
 
-	sgd = tf.keras.optimizers.SGD(momentum=0.9)
+	# sgd = tf.keras.optimizers.SGD(momentum=0.9)
 	model.compile(optimizer="adam",
 								loss="mean_squared_error",
 								metrics=["mae"])
@@ -49,17 +52,20 @@ def cnn_model(image):
 	callback = myCallback()
 	model.summary()
 	history = model.fit(X_train, y_train, epochs=20, validation_split=0.1, batch_size=64, callbacks=[callback])
-
-	# fig = px.line(
-	#			history.history, y=["loss", "val_loss"],
-	#			labels={"index": "epoch", "value": "loss"},
-	#			title="Training History")
-	# fig.show()
-
 	mse, mae = model.evaluate(X_test, y_test, verbose=0)
 	print("Test Mean squared error: {}".format(mse))
 	print("Test Mean absolute error: {}".format(mae))
+	return model, history
 
-	model.save("./")
-	predictions = model.predict(image)
-	return predictions
+# def graph_model(history):
+#		fig = px.line(
+#					history.history, y=["loss", "val_loss"],
+#					labels={"index": "epoch", "value": "loss"},
+#					title="Training History")
+#		fig.show()
+
+if __name__ == "__main__":
+	X, y = preprocess_data("age_gender.csv")
+	model, history = train_model(X, y)
+	model.save("age_model.h5")
+	# graph_model(history)
